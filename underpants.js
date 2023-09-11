@@ -566,42 +566,21 @@ _.reduce = function (array, func, seed) {
 *   _.extend(data, {a:"two"}); -> data now equals {a:"two"}
 */
 
-_.extend = function (collection, func) {
-    //this line of code checks if function is provided
-    if (!func) {
-        //this line of coded iterates through each element in the collection
-        for (var item of collection) {
-            //this line checks if element is false
-            if (item) {
-                //return false if at least one element is false
-                return false;
-            }
-        }
-        //returns true if all elements are true
-        return true;
-    }
-    //this line checks if colllection is an array
-    if (Array.isArray(collection)) {
-        //iterates through each element of the array
-        for (let i = 0; i < collection.length; i++) {
-            if (!func(collection[i], i, collection)) {
-                return false;
-            }
-        }
-    } else if (typeof collection === "object") {
-        //iterates through each property in the obj
-        for (var key in collection) {
-            //checks if property is directly on the obj
-            if (collection.hasOwnProperty(key)) {
-                //calling the function with the correct arguments
-                if (!func(collection[key], key, collection)) {
-                    return false;
+_.extend = function (obj) {
+    // Loop through each source object starting from the second argument
+    for (let i = 1; i < arguments.length; i++) {
+        var obj2 = arguments[i];
+        if (obj2 && typeof obj2 === "object") {
+             // Loop through the properties of the source object
+            for (var key in obj2) {
+                if (obj2.hasOwnProperty((key))) {
+                    // Copy the property from source to target
+                    obj[key] = obj2[key];
                 }
             }
         }
     }
-    return true;
-
+    return obj;
 }
 
 
